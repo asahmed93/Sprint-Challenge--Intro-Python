@@ -31,15 +31,13 @@ cities = []
 def cityreader(cities=[]):
     # TODO Implement the functionality to read from the 'cities.csv'
     # file
-    with open('cities.csv', 'r') as file:
+    with open('cities.csv', 'r') as records:
         # print(file.read())
         # returns file as a dictionary item
-        reader = csv.DictReader(file)
+        reader = csv.DictReader(records)
         for city in reader:
             newCity = City(
-                city["city"], float(
-                    city["lat"]), float(
-                    city["lng"]))
+                city['city'], float(city['lat']), float(city['lng']))
             cities.append(newCity)
     # For each city record, create a new City instance and add it to the
     # `cities` list
@@ -82,13 +80,49 @@ for c in cities:
 # Salt Lake City: (40.7774,-111.9301)
 
 # TODO Get latitude and longitude values from the user
+# float(lat1), float(lon1)
+lat1, lon1 = input('Enter lat1, lon1\n').split(',')
+# float(lat2), float(lon2)
+lat2, lon2 = input('Enter\n').split(',')
 
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
-    # within will hold the cities that fall within the specified region
-    within = []
+    if lat1 > lat2:
+        newlat1 = lat1
+        newlat2 = lat2
+    else:
+        newlat1 = lat2
+        newlat2 = lat1
+
+    if lon1 > lon2:
+        newlon1 = lon1
+        newlon2 = lon2
+    else:
+        newlon1 = lon2
+        newlon2 = lon1
+
+    print(
+        newlat1,
+        newlat2,
+        newlon1,
+        newlon2,
+        "\n CITIES INSIDE DEST")
+    within = [i for i in cities if i.lat >
+              newlat2 and i.lat < newlat1 and i.lon >
+              newlon2 and i.lon < newlon1]
+
+    for i in within:
+        print(i)
 
     # Go through each city and check to see if it falls within
     # the specified coordinates.
 
     return within
+
+
+cityreader_stretch(
+    float(lat1),
+    float(lon1),
+    float(lat2),
+    float(lon2),
+    cities)
